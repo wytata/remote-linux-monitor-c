@@ -47,6 +47,36 @@ void sshConnect::onSubmit(wxCommandEvent& event) {
 
     // TODO Authenticate the server
 
+    // Password auth
+    rc = ssh_userauth_password(sesh, user.c_str(), password.c_str());
+    if (rc != SSH_AUTH_SUCCESS) {
+        printf("SSH AUTH FAILURE\n");
+        ssh_disconnect(sesh);
+        ssh_free(sesh);
+        return;
+    }
+
+    char* testCommand = "ps aux";
+    char responseBuf[1024];
+    int numBytes;
+
+    ssh_channel channel = ssh_channel_new(sesh);
+    ssh_channel_open_session(channel);
+    ssh_channel_request_exec(channel, testCommand);
+
+    numBytes = ssh_channel_read(channel, responseBuf, sizeof(responseBuf), 0);
+    while (numBytes > 0)
+    {
+      if (write(1, responseBuf, numBytes) != (unsigned int) numBytes)
+      {
+        ssh_channel_close(channel);
+        ssh_channel_free(channel);
+        return;
+      }
+      numBytes = ssh_channel_read(channel, responseBuf, sizeof(responseBuf), 0);
+    }
+
+    ssh_disconnect(sesh);
     ssh_free(sesh);
 }
 

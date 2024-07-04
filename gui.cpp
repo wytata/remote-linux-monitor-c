@@ -91,8 +91,6 @@ void MyFrame::OnConnect(wxCommandEvent& event)
 {
     sshConnect sshConnectDialog;
     sshConnectDialog.ShowModal();
-    
-    std::cout << "Displayed connect box" << std::endl;
 }
 
 
