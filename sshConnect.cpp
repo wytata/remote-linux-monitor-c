@@ -6,7 +6,7 @@
 #include <libssh/libssh.h>
 
 wxBEGIN_EVENT_TABLE(sshConnect, wxDialog)
-    EVT_BUTTON(69, sshConnect::onCancel)
+    EVT_BUTTON(71, sshConnect::onCancel)
     EVT_BUTTON(70, sshConnect::onSubmit)
 wxEND_EVENT_TABLE()
 
@@ -70,7 +70,7 @@ sshConnect::sshConnect() : wxDialog(NULL, wxID_ANY, "SSH Login") {
 
     wxSize defaultButtonSize = wxButton::GetDefaultSize();
     submitButton = new wxButton(this, 70, "Submit");
-    cancelButton = new wxButton(this, 69, "Cancel");
+    cancelButton = new wxButton(this, 71, "Cancel");
     buttonBox->Add(submitButton, 0, wxALIGN_CENTER_VERTICAL);
     buttonBox->AddSpacer(10);
     buttonBox->Add(cancelButton, 0, wxALIGN_CENTER_VERTICAL);
