@@ -1,4 +1,5 @@
 // Start of wxWidgets "Hello World" Program #include <wx/wx.h>
+#define LIBSSH_STATIC 1
 #include <libssh/libsshpp.hpp>
 #include "sshConnect.h"
  
