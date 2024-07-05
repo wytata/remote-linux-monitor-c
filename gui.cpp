@@ -2,11 +2,15 @@
 #define LIBSSH_STATIC 1
 #include <libssh/libsshpp.hpp>
 #include "sshConnect.h"
+#include <wx-3.2/wx/notebook.h>
+#include "FileSystem.h"
+#include "System.h"
+#include "Resources.h"
+#include "Processes.h"
  
 class MyApp : public wxApp
 {
-public:
-    bool OnInit() override;
+public: bool OnInit() override;
 };
 
  
@@ -74,6 +78,13 @@ MyFrame::MyFrame()
     Bind(wxEVT_MENU, &MyFrame::OnConnect, this, ID_Connect);
     Bind(wxEVT_MENU, &MyFrame::OnAbout, this, wxID_ABOUT);
     Bind(wxEVT_MENU, &MyFrame::OnExit, this, wxID_EXIT);
+
+    wxNotebook *nb = new wxNotebook(this, -1, wxDefaultPosition, wxDefaultSize, wxNB_TOP, "notebookname");
+    nb->AddPage(new System(nb), "System");
+    nb->AddPage(new Processes(nb), "Processes");
+    nb->AddPage(new Resources(nb), "Resources");
+    nb->AddPage(new FileSystem(nb), "File Systems");
+    printf("selected page is %d\n", nb->GetSelection());
 }
  
 void MyFrame::OnExit(wxCommandEvent& event)
@@ -92,11 +103,5 @@ void MyFrame::OnConnect(wxCommandEvent& event)
     sshConnect sshConnectDialog;
     sshConnectDialog.ShowModal();
 }
-
-
-
-
-
-
 
 
